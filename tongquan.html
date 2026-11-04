@@ -165,38 +165,7 @@
                 Khẩn cấp
               </span>
 </div>
-<div class="flex flex-col gap-space-sm">
-<!-- Item 1 -->
-<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-center justify-between gap-space-xs">
-<div class="flex flex-col">
-<span class="font-label-lg text-label-lg font-bold text-on-surface line-clamp-1">Bài Lab 4: B-Tree &amp; AVL</span>
-<span class="font-body-sm text-body-sm text-error font-medium">18 bài mới nộp • Hết hạn hôm nay</span>
-</div>
-<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-secondary font-label-md text-label-md font-semibold hover:bg-surface-variant shadow-sm flex-shrink-0" type="button">
-                  Chấm ngay
-                </button>
-</div>
-<!-- Item 2 -->
-<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-center justify-between gap-space-xs">
-<div class="flex flex-col">
-<span class="font-label-lg text-label-lg font-bold text-on-surface line-clamp-1">Milestone 2: Dự án NodeJS</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant">12 nhóm chờ duyệt đồ án</span>
-</div>
-<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-secondary font-label-md text-label-md font-semibold hover:bg-surface-variant shadow-sm flex-shrink-0" type="button">
-                  Duyệt
-                </button>
-</div>
-<!-- Item 3 -->
-<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-center justify-between gap-space-xs">
-<div class="flex flex-col">
-<span class="font-label-lg text-label-lg font-bold text-on-surface line-clamp-1">Đề trắc nghiệm Chương 3</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Tự động chấm • 3 SV xin phúc khảo</span>
-</div>
-<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-secondary font-label-md text-label-md font-semibold hover:bg-surface-variant shadow-sm flex-shrink-0" type="button">
-                  Xem lại
-                </button>
-</div>
-</div>
+<div id="urgent-grading-list" class="flex flex-col gap-space-sm"></div>
 <button class="w-full py-2 rounded-lg bg-surface-container text-on-surface font-label-lg text-label-lg font-semibold hover:bg-surface-container-high transition-colors text-center mt-space-xs" type="button">
               Mở sổ điểm toàn bộ (Gradebook)
             </button>
@@ -345,6 +314,7 @@
   const AIRTABLE_BASE_ID = 'appZ1Km2hHs0TUJ1x';
   const AIRTABLE_SCHEDULE_TABLE_NAME = 'Lịch giảng dạy';
   const AIRTABLE_PROGRESS_TABLE_NAME = 'Lớp học phần';
+  const AIRTABLE_GRADING_QUEUE_TABLE_NAME = 'Hàng đợi chấm điểm';
 
   const scheduleSummary = document.getElementById('schedule-summary');
   const scheduleDateLabel = document.getElementById('schedule-date-label');
@@ -568,6 +538,106 @@
     }).join('');
   }
 
+  function getUrgencyLevel(level) {
+    const normalized = String(level || '').trim().toLowerCase();
+    if (normalized.includes('khẩn') || normalized.includes('urgent')) return { rank: 1, badge: 'bg-error-container text-on-error-container', textClass: 'text-error' };
+    if (normalized.includes('cao') || normalized.includes('high')) return { rank: 2, badge: 'bg-secondary-fixed text-on-secondary-fixed', textClass: 'text-secondary' };
+    if (normalized.includes('trung bình') || normalized.includes('medium')) return { rank: 3, badge: 'bg-surface-variant text-on-surface-variant', textClass: 'text-on-surface-variant' };
+    return { rank: 4, badge: 'bg-surface-container text-on-surface', textClass: 'text-on-surface-variant' };
+  }
+
+  function formatAirtableDate(dateValue) {
+    if (!dateValue) return 'Chưa cập nhật';
+    const parsed = new Date(`${dateValue}T00:00:00`);
+    if (Number.isNaN(parsed.getTime())) return String(dateValue);
+
+    return new Intl.DateTimeFormat('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(parsed);
+  }
+
+  function renderUrgentGrading(records) {
+    const container = document.getElementById('urgent-grading-list');
+    if (!container) return;
+
+    const safeRecords = Array.isArray(records) ? records : [];
+    if (!safeRecords.length) {
+      container.innerHTML = `
+        <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm text-on-surface-variant">
+          Chưa có bài chấm điểm đang chờ xử lý.
+        </div>`;
+      return;
+    }
+
+    const sorted = [...safeRecords].sort((a, b) => {
+      const aLevel = getUrgencyLevel(a?.fields?.['Mức độ']);
+      const bLevel = getUrgencyLevel(b?.fields?.['Mức độ']);
+      const aCount = Number(a?.fields?.['Số lượng chờ'] ?? 0);
+      const bCount = Number(b?.fields?.['Số lượng chờ'] ?? 0);
+
+      if (aLevel.rank !== bLevel.rank) return aLevel.rank - bLevel.rank;
+      return bCount - aCount;
+    });
+
+    container.innerHTML = sorted.map((record) => {
+      const fields = record.fields || {};
+      const title = fields['Tên bài'] || 'Bài chưa đặt tên';
+      const subject = fields['Môn học'] || 'Môn học chưa cập nhật';
+      const note = fields['Ghi chú'] || 'Chưa có ghi chú';
+      const action = fields['Hành động'] || 'Xem chi tiết';
+      const urgency = fields['Mức độ'] || 'Bình thường';
+      const pendingCount = Number(fields['Số lượng chờ'] ?? 0);
+      const deadline = formatAirtableDate(fields['Hạn chót']);
+      const urgencyInfo = getUrgencyLevel(urgency);
+
+      return `
+        <div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors flex items-center justify-between gap-space-xs">
+          <div class="flex flex-col">
+            <span class="font-label-lg text-label-lg font-bold text-on-surface line-clamp-1">${title}</span>
+            <span class="font-body-sm text-body-sm text-on-surface-variant">${subject} • Hạn: ${deadline}</span>
+            <span class="font-body-sm text-body-sm ${urgencyInfo.textClass} font-medium">${pendingCount} bài mới nộp • ${note}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-full ${urgencyInfo.badge} font-label-md text-label-md font-bold">${urgency}</span>
+            <button class="px-2.5 py-1 rounded bg-surface-container-lowest text-secondary font-label-md text-label-md font-semibold hover:bg-surface-variant shadow-sm flex-shrink-0" type="button">
+              ${action}
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function loadUrgentGrading() {
+    try {
+      const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_GRADING_QUEUE_TABLE_NAME)}`;
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Airtable trả về HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      renderUrgentGrading(Array.isArray(data.records) ? data.records : []);
+    } catch (error) {
+      const container = document.getElementById('urgent-grading-list');
+      if (container) {
+        container.innerHTML = `
+          <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm text-error">
+            Không thể tải dữ liệu hàng đợi chấm điểm từ Airtable.
+          </div>`;
+      }
+      console.error(error);
+    }
+  }
+
   async function loadProgress() {
     try {
       const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_PROGRESS_TABLE_NAME)}`;
@@ -599,6 +669,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     loadSchedule();
     loadProgress();
+    loadUrgentGrading();
   });
 </script>
 </body></html>
