@@ -152,50 +152,7 @@
 </div>
 <span class="font-code-inline text-code-inline text-on-surface-variant">HK1 • 2024</span>
 </div>
-<div class="flex flex-col gap-space-md">
-<!-- Môn 1 -->
-<div class="flex flex-col gap-1.5">
-<div class="flex justify-between items-center text-sm">
-<span class="font-label-lg text-label-lg font-bold text-on-surface">Cấu trúc Dữ liệu &amp; GT</span>
-<span class="font-code-inline text-code-inline text-secondary font-semibold">Tuần 8/15 • 53%</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-2.5 overflow-hidden">
-<div class="bg-secondary h-full rounded-full" style="width: 53.3%;"></div>
-</div>
-<div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
-<span>6 Lab hoàn thành</span>
-<span>Thi GK: Tuần 9</span>
-</div>
-</div>
-<!-- Môn 2 -->
-<div class="flex flex-col gap-1.5">
-<div class="flex justify-between items-center text-sm">
-<span class="font-label-lg text-label-lg font-bold text-on-surface">Lập trình Web Fullstack</span>
-<span class="font-code-inline text-code-inline text-secondary font-semibold">Tuần 8/15 • 53%</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-2.5 overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 53.3%;"></div>
-</div>
-<div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
-<span>Sprint 2 kết thúc</span>
-<span>Báo cáo Milestone: T9</span>
-</div>
-</div>
-<!-- Môn 3 -->
-<div class="flex flex-col gap-1.5">
-<div class="flex justify-between items-center text-sm">
-<span class="font-label-lg text-label-lg font-bold text-on-surface">Trí tuệ Nhân tạo</span>
-<span class="font-code-inline text-code-inline text-tertiary font-semibold">Tuần 9/15 • 60%</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-2.5 overflow-hidden">
-<div class="bg-tertiary-container h-full rounded-full" style="width: 60%;"></div>
-</div>
-<div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
-<span>Đã chấm Mini-Test 2</span>
-<span>Seminar Tuần 11</span>
-</div>
-</div>
-</div>
+<div id="progress-list" class="flex flex-col gap-space-md"></div>
 </div>
 <!-- HÀNG ĐỢI THẨM ĐỊNH ĐIỂM KHẨN CẤP (URGENT GRADING) -->
 <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col justify-between gap-space-sm">
@@ -384,9 +341,10 @@
 </div>
 </div></main></div>
 <script>
-  const AIRTABLE_TOKEN = "AIRTABLETOKEN";
+  const AIRTABLE_TOKEN = 'patipjvI2EzsKUQFc.2c19959cb86c2aa545463d16653522669c78dbe60c78b6561b775567125ce2ae';
   const AIRTABLE_BASE_ID = 'appZ1Km2hHs0TUJ1x';
-  const AIRTABLE_TABLE_NAME = 'Lịch giảng dạy';
+  const AIRTABLE_SCHEDULE_TABLE_NAME = 'Lịch giảng dạy';
+  const AIRTABLE_PROGRESS_TABLE_NAME = 'Lớp học phần';
 
   const scheduleSummary = document.getElementById('schedule-summary');
   const scheduleDateLabel = document.getElementById('schedule-date-label');
@@ -537,7 +495,7 @@
 
   async function loadSchedule() {
     try {
-      const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
+      const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_SCHEDULE_TABLE_NAME)}`;
       const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${AIRTABLE_TOKEN}`,
@@ -564,7 +522,83 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', loadSchedule);
+  function renderProgress(records) {
+    const container = document.getElementById('progress-list');
+    if (!container) return;
+
+    const safeRecords = Array.isArray(records) ? records : [];
+    if (!safeRecords.length) {
+      container.innerHTML = `
+        <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm text-on-surface-variant">
+          Chưa có dữ liệu tiến độ học phần.
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = safeRecords.map((record) => {
+      const fields = record.fields || {};
+      const title = fields['Tên môn học'] || fields['Mã môn'] || 'Môn học';
+      const code = fields['Mã môn'] || '';
+      const currentWeek = Number(fields['Tuần hiện tại'] ?? 0);
+      const totalWeek = Number(fields['Tổng số tuần'] ?? 1);
+      const progressPercent = Number(fields['Tiến độ'] ?? 0) * 100;
+      const safeProgress = Math.min(Math.max(progressPercent, 0), 100);
+      const note = fields['Ghi chú'] || 'Đang cập nhật';
+      const milestone = fields['Mốc sắp tới'] || 'Đang cập nhật';
+      const colorClass = ['bg-secondary', 'bg-primary-container', 'bg-tertiary-container'][Math.abs((title.length + currentWeek) % 3)];
+
+      return `
+        <div class="flex flex-col gap-1.5">
+          <div class="flex justify-between items-center text-sm">
+            <div class="flex flex-col">
+              <span class="font-label-lg text-label-lg font-bold text-on-surface">${title}</span>
+              ${code ? `<span class="font-code-inline text-code-inline text-on-surface-variant">${code}</span>` : ''}
+            </div>
+            <span class="font-code-inline text-code-inline text-secondary font-semibold">Tuần ${currentWeek}/${totalWeek} • ${Math.round(safeProgress)}%</span>
+          </div>
+          <div class="w-full bg-surface-container rounded-full h-2.5 overflow-hidden">
+            <div class="${colorClass} h-full rounded-full" style="width: ${safeProgress}%;"></div>
+          </div>
+          <div class="flex justify-between font-label-md text-label-md text-on-surface-variant gap-2">
+            <span>${note}</span>
+            <span>${milestone}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function loadProgress() {
+    try {
+      const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_PROGRESS_TABLE_NAME)}`;
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Airtable trả về HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      renderProgress(Array.isArray(data.records) ? data.records : []);
+    } catch (error) {
+      const container = document.getElementById('progress-list');
+      if (container) {
+        container.innerHTML = `
+          <div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm text-error">
+            Không thể tải tiến độ học phần từ Airtable.
+          </div>`;
+      }
+      console.error(error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadSchedule();
+    loadProgress();
+  });
 </script>
 </body></html>
-
