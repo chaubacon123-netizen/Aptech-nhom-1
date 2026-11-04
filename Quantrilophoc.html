@@ -295,7 +295,12 @@
 </div>
 </div>
 <div class="flex items-center gap-space-sm">
-<span class="font-label-md text-label-md text-on-surface-variant font-semibold">Hiển thị 6 / 48 Lớp học phần</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-semibold" id="courseCount">Đang tải lớp học phần...</span>
+<span class="font-label-md text-label-md text-on-surface-variant" id="courseSyncStatus" role="status" aria-live="polite"></span>
+<button class="bg-surface-container-low hover:bg-surface-container text-on-surface px-space-sm py-space-xs rounded-lg font-label-md text-label-md flex items-center gap-space-xs transition-colors disabled:opacity-50" id="syncCourseTableBtn" type="button">
+<span class="material-symbols-outlined text-sm">sync</span>
+<span>Đồng bộ</span>
+</button>
 <button class="bg-surface-container-low hover:bg-surface-container text-on-surface px-space-sm py-space-xs rounded-lg font-label-md text-label-md flex items-center gap-space-xs transition-colors" type="button">
 <span class="material-symbols-outlined text-sm">file_download</span>
 <span>Xuất toàn bộ DS</span>
@@ -316,7 +321,7 @@
 <th class="px-space-md font-semibold text-right">Thao tác</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm">
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm" id="courseTableBody" hidden>
 <!-- Row 1 -->
 <tr class="hover:bg-surface-container-low/50 transition-colors">
 <td class="px-space-md py-space-md font-code-inline text-code-inline font-bold text-primary">
@@ -645,22 +650,7 @@
 </div>
 <!-- Table Footer / Pagination -->
 <div class="px-space-md py-space-sm bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-between gap-space-sm">
-<div class="font-body-sm text-body-sm text-on-surface-variant">
-          Hiển thị trang <strong class="text-on-surface">1</strong> trên <strong class="text-on-surface">8</strong> • Tổng số 48 lớp học phần được kích hoạt
-        </div>
-<div class="flex items-center gap-space-xs">
-<button class="px-space-sm py-1 rounded text-outline hover:text-on-surface hover:bg-surface-container text-sm disabled:opacity-40" disabled="">
-            Trước
-          </button>
-<button class="w-8 h-8 rounded bg-primary text-on-primary font-label-md text-label-md font-bold">1</button>
-<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface font-label-md text-label-md">2</button>
-<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface font-label-md text-label-md">3</button>
-<span class="px-1 text-outline">...</span>
-<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface font-label-md text-label-md">8</button>
-<button class="px-space-sm py-1 rounded text-on-surface hover:bg-surface-container text-sm">
-            Sau
-          </button>
-</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant" id="courseTableSummary">Dữ liệu lớp học phần được đồng bộ từ Airtable.</div>
 </div>
 </div>
 <!-- Section 4: Faculty Laboratory & Infrastructure Distribution Overview -->
@@ -693,19 +683,245 @@
 <!-- Micro-interaction Logic -->
 <script>
     const AIRTABLE_ATTENDANCE_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/Chuy%C3%AAn%20c%E1%BA%A7n';
-    const AIRTABLE_ATTENDANCE_TOKEN = 'patQ7qBMlO3LlCeSp.12bc507f2f5d90b2704cbf1b547c75d7c80c57a7b2418ca91d837fd3cba12c1a';
+    const AIRTABLE_API_TOKEN = 'YOUR_TOKEN_HERE';
 
     const AIRTABLE_ROOMS_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/tbluxL7DSkEk9bZ5R';
+    const AIRTABLE_COURSES_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/tblSnweA7llHdwCt1';
     const attendanceList = document.getElementById('attendanceWarningList');
     const attendanceCount = document.getElementById('attendanceWarningCount');
     const attendanceLink = document.getElementById('attendanceWarningLink');
     const bulkAlertButton = document.getElementById('sendBulkAlertBtn');
     const labRoomGrid = document.getElementById('labRoomGrid');
+    const courseTableBody = document.getElementById('courseTableBody');
+    const courseCount = document.getElementById('courseCount');
+    const courseSyncStatus = document.getElementById('courseSyncStatus');
+    const courseTableSummary = document.getElementById('courseTableSummary');
+    const syncCourseTableBtn = document.getElementById('syncCourseTableBtn');
 
     function getFieldText(value) {
       if (Array.isArray(value)) return value.map(String).join(', ');
       return value == null ? '' : String(value);
     }
+
+    function getFirstField(fields, names) {
+      for (const name of names) {
+        const value = fields[name];
+        if (value !== undefined && value !== null && value !== '') return value;
+      }
+      return '';
+    }
+
+    function createCourseCell(className, content) {
+      const cell = document.createElement('td');
+      cell.className = className;
+      if (content instanceof Node) cell.append(content);
+      else cell.textContent = content;
+      return cell;
+    }
+
+    function createCourseRow(record) {
+      const fields = record.fields || {};
+      const classCode = getFieldText(getFirstField(fields, ['Mã lớp HP', 'Mã lớp học phần', 'Mã lớp'])) || 'Chưa có mã lớp';
+      const courseName = getFieldText(fields['Tên học phần']) || 'Chưa có tên học phần';
+      const credits = getFieldText(fields['Số tín chỉ']);
+      const department = getFieldText(fields['Tên bộ môn']);
+      const lecturer = getFieldText(fields['Tên giảng viên']);
+      const lecturerEmail = getFieldText(getFirstField(fields, ['Email giảng viên', 'Email giảng viên phụ trách']));
+      const room = getFieldText(fields['Tên phòng']);
+      const schedule = getFieldText(fields['Lịch học']) || 'Chưa cập nhật lịch học';
+      const students = fields['Tên sinh viên'];
+      const studentCountValue = getFirstField(fields, ['Sĩ số hiện tại', 'Sĩ số thực tế', 'Số lượng sinh viên']);
+      const studentCount = studentCountValue !== ''
+        ? Number(studentCountValue)
+        : (Array.isArray(students) ? students.length : Number(students));
+      const capacity = Number(fields['Sĩ số tối đa']);
+      const hasEnrollment = Number.isFinite(studentCount) && Number.isFinite(capacity) && capacity > 0;
+      const fillRate = hasEnrollment ? Math.min(studentCount / capacity * 100, 100) : 0;
+      const attendanceValue = fields['Tỷ lệ chuyên cần'];
+      const attendance = attendanceValue === null || attendanceValue === undefined || attendanceValue === ''
+        ? Number.NaN
+        : Number(attendanceValue);
+      const attendanceText = Number.isFinite(attendance)
+        ? `${(attendance <= 1 ? attendance * 100 : attendance).toFixed(1).replace(/\.0$/, '')}%`
+        : 'Chưa có dữ liệu';
+
+      const row = document.createElement('tr');
+      row.className = 'hover:bg-surface-container-low/50 transition-colors';
+      row.append(createCourseCell('px-space-md py-space-md font-code-inline text-code-inline font-bold text-primary', classCode));
+
+      const courseDetails = document.createElement('div');
+      courseDetails.className = 'flex flex-col';
+      const name = document.createElement('span');
+      name.className = 'font-label-lg text-label-lg text-on-surface font-semibold';
+      name.textContent = courseName;
+      courseDetails.append(name);
+      const metadata = document.createElement('div');
+      metadata.className = 'flex items-center gap-space-xs mt-0.5';
+      const creditLabel = document.createElement('span');
+      creditLabel.className = 'font-code-inline text-code-inline text-on-surface-variant';
+      creditLabel.textContent = credits ? `${credits} Tín chỉ` : 'Chưa có tín chỉ';
+      metadata.append(creditLabel);
+      if (department) {
+        const separator = document.createElement('span');
+        separator.className = 'text-outline';
+        separator.textContent = '•';
+        const departmentLabel = document.createElement('span');
+        departmentLabel.className = 'font-label-md text-label-md text-secondary font-medium';
+        departmentLabel.textContent = department;
+        metadata.append(separator, departmentLabel);
+      }
+      courseDetails.append(metadata);
+      row.append(createCourseCell('px-space-md py-space-md', courseDetails));
+
+      const lecturerDetails = document.createElement('div');
+      lecturerDetails.className = 'flex items-center gap-space-sm';
+      const lecturerIcon = document.createElement('span');
+      lecturerIcon.className = 'material-symbols-outlined w-8 h-8 rounded-full bg-surface-container text-secondary flex items-center justify-center';
+      lecturerIcon.textContent = 'person';
+      const lecturerText = document.createElement('div');
+      lecturerText.className = 'flex flex-col';
+      const lecturerName = document.createElement('span');
+      lecturerName.className = 'font-label-lg text-label-lg text-on-surface font-semibold';
+      lecturerName.textContent = lecturer || 'Chưa phân công';
+      lecturerText.append(lecturerName);
+      if (lecturerEmail) {
+        const email = document.createElement('span');
+        email.className = 'font-label-md text-label-md text-on-surface-variant';
+        email.textContent = lecturerEmail;
+        lecturerText.append(email);
+      }
+      lecturerDetails.append(lecturerIcon, lecturerText);
+      row.append(createCourseCell('px-space-md py-space-md', lecturerDetails));
+
+      const enrollment = document.createElement('div');
+      enrollment.className = 'flex flex-col gap-1 w-32';
+      const enrollmentLabel = document.createElement('div');
+      enrollmentLabel.className = 'flex justify-between items-center font-label-md text-label-md';
+      const enrollmentCount = document.createElement('span');
+      enrollmentCount.className = 'font-semibold text-on-surface';
+      enrollmentCount.textContent = hasEnrollment ? `${studentCount} / ${capacity} SV` : `— / ${Number.isFinite(capacity) && capacity > 0 ? capacity : '—'} SV`;
+      const enrollmentRate = document.createElement('span');
+      enrollmentRate.className = 'text-on-surface-variant';
+      enrollmentRate.textContent = hasEnrollment ? `${Math.round(fillRate)}%` : '—';
+      enrollmentLabel.append(enrollmentCount, enrollmentRate);
+      const progressTrack = document.createElement('div');
+      progressTrack.className = 'w-full h-1.5 bg-surface-container rounded-full overflow-hidden';
+      const progress = document.createElement('div');
+      progress.className = 'h-full bg-secondary';
+      progress.style.width = `${fillRate}%`;
+      progressTrack.append(progress);
+      enrollment.append(enrollmentLabel, progressTrack);
+      row.append(createCourseCell('px-space-md py-space-md', enrollment));
+
+      const scheduleDetails = document.createElement('div');
+      scheduleDetails.className = 'flex flex-col';
+      const scheduleLabel = document.createElement('span');
+      scheduleLabel.className = 'font-label-lg text-label-lg text-on-surface font-medium';
+      scheduleLabel.textContent = schedule;
+      const roomDetails = document.createElement('div');
+      roomDetails.className = 'flex items-center gap-1 text-on-surface-variant';
+      const roomIcon = document.createElement('span');
+      roomIcon.className = 'material-symbols-outlined text-xs';
+      roomIcon.textContent = 'computer';
+      const roomLabel = document.createElement('span');
+      roomLabel.className = 'font-code-inline text-code-inline';
+      roomLabel.textContent = room || 'Chưa xếp phòng';
+      roomDetails.append(roomIcon, roomLabel);
+      scheduleDetails.append(scheduleLabel, roomDetails);
+      row.append(createCourseCell('px-space-md py-space-md', scheduleDetails));
+
+      const attendanceBadge = document.createElement('span');
+      attendanceBadge.className = 'bg-tertiary-container/10 text-tertiary-container px-space-sm py-1 rounded font-label-md text-label-md font-bold inline-flex items-center gap-1';
+      const attendanceDot = document.createElement('span');
+      attendanceDot.className = 'w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim';
+      attendanceBadge.append(attendanceDot, document.createTextNode(attendanceText));
+      row.append(createCourseCell('px-space-md py-space-md text-center', attendanceBadge));
+
+      const actions = document.createElement('div');
+      actions.className = 'flex items-center justify-end gap-space-xs';
+      [
+        ['visibility', 'Chi tiết môn học'],
+        ['person_add', 'Phân công giảng dạy'],
+        ['file_download', 'Xuất bảng điểm']
+      ].forEach(([icon, title]) => {
+        const button = document.createElement('button');
+        button.className = 'p-space-xs text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors';
+        button.type = 'button';
+        button.title = title;
+        button.dataset.recordId = record.id || '';
+        const symbol = document.createElement('span');
+        symbol.className = 'material-symbols-outlined text-lg';
+        symbol.textContent = icon;
+        button.append(symbol);
+        actions.append(button);
+      });
+      row.append(createCourseCell('px-space-md py-space-md text-right', actions));
+      return row;
+    }
+
+    function showCourseTableMessage(message, isError = false) {
+      const row = document.createElement('tr');
+      const cell = document.createElement('td');
+      cell.colSpan = 7;
+      cell.className = `px-space-md py-space-lg text-center font-body-sm text-body-sm ${isError ? 'text-error' : 'text-on-surface-variant'}`;
+      cell.textContent = message;
+      row.append(cell);
+      courseTableBody.replaceChildren(row);
+    }
+
+    async function fetchCourseRecords() {
+      if (!AIRTABLE_API_TOKEN || AIRTABLE_API_TOKEN === 'YOUR_SECRET_API_TOKEN') {
+        throw new Error('Hãy cấu hình Airtable token ở cuối trang trước khi đồng bộ.');
+      }
+
+      const records = [];
+      let offset = '';
+      do {
+        const url = new URL(AIRTABLE_COURSES_URL);
+        url.searchParams.set('pageSize', '100');
+        if (offset) url.searchParams.set('offset', offset);
+
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${AIRTABLE_API_TOKEN}` }
+        });
+        if (!response.ok) {
+          throw new Error(`Airtable trả về lỗi ${response.status}. Kiểm tra PAT và quyền truy cập bảng.`);
+        }
+
+        const page = await response.json();
+        records.push(...(page.records || []));
+        offset = page.offset || '';
+      } while (offset);
+      return records;
+    }
+
+    async function loadCourseSections() {
+      syncCourseTableBtn.disabled = true;
+      courseTableBody.hidden = false;
+      courseSyncStatus.textContent = 'Đang đồng bộ...';
+      showCourseTableMessage('Đang tải danh sách lớp học phần...');
+
+      try {
+        const records = await fetchCourseRecords();
+        const rows = records.map(createCourseRow);
+        if (rows.length) courseTableBody.replaceChildren(...rows);
+        else showCourseTableMessage('Airtable chưa có dữ liệu lớp học phần.');
+        courseCount.textContent = `Hiển thị ${records.length} / ${records.length} Lớp học phần`;
+        const syncedAt = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+        courseSyncStatus.textContent = `Đồng bộ lúc ${syncedAt}`;
+        courseTableSummary.textContent = `Tổng số ${records.length} lớp học phần • Đồng bộ lần cuối ${syncedAt}`;
+      } catch (error) {
+        showCourseTableMessage(`Không tải được dữ liệu lớp học phần: ${error.message}`, true);
+        courseCount.textContent = 'Lỗi tải lớp học phần';
+        courseSyncStatus.textContent = 'Đồng bộ thất bại';
+        courseTableSummary.textContent = error.message;
+      } finally {
+        syncCourseTableBtn.disabled = false;
+      }
+    }
+
+    syncCourseTableBtn.addEventListener('click', loadCourseSections);
+    loadCourseSections();
 
     function getStudentId(fields) {
       return getFieldText(fields.MSSV || fields['Mã số sinh viên'] || fields['Mã SV']);
@@ -769,7 +985,7 @@
     }
 
     async function fetchAttendanceRecords() {
-      if (!AIRTABLE_ATTENDANCE_TOKEN || AIRTABLE_ATTENDANCE_TOKEN === 'YOUR_SECRET_API_TOKEN') {
+      if (!AIRTABLE_API_TOKEN || AIRTABLE_API_TOKEN === 'YOUR_SECRET_API_TOKEN') {
         throw new Error('Hãy điền Airtable token trong cấu hình ở cuối trang.');
       }
 
@@ -783,7 +999,7 @@
         if (offset) url.searchParams.set('offset', offset);
 
         const response = await fetch(url, {
-          headers: { Authorization: `Bearer ${AIRTABLE_ATTENDANCE_TOKEN}` }
+          headers: { Authorization: `Bearer ${AIRTABLE_API_TOKEN}` }
         });
         if (!response.ok) throw new Error(`Airtable trả về lỗi ${response.status}.`);
 
@@ -834,7 +1050,7 @@
     loadAttendanceWarnings();
 
     function getRoomCategory(status) {
-      const normalizedStatus = status.trim().toLocaleLowerCase('vi');
+      const normalizedStatus = (status ?? '').trim().toLocaleLowerCase('vi');
       if (normalizedStatus.includes('đang có lớp') || normalizedStatus === 'đầy' || normalizedStatus === 'đang sử dụng') return 'occupied';
       if (normalizedStatus === 'trống' || normalizedStatus === 'còn trống') return 'available';
       if (normalizedStatus.includes('bảo trì')) return 'maintenance';
@@ -888,7 +1104,7 @@
     }
 
     async function fetchLabRoomRecords() {
-      if (!AIRTABLE_ATTENDANCE_TOKEN || AIRTABLE_ATTENDANCE_TOKEN === 'YOUR_SECRET_API_TOKEN') {
+      if (!AIRTABLE_API_TOKEN || AIRTABLE_API_TOKEN === 'YOUR_SECRET_API_TOKEN') {
         throw new Error('Hãy điền Airtable token trong cấu hình ở cuối trang.');
       }
 
@@ -901,7 +1117,7 @@
         if (offset) url.searchParams.set('offset', offset);
 
         const response = await fetch(url, {
-          headers: { Authorization: `Bearer ${AIRTABLE_ATTENDANCE_TOKEN}` }
+          headers: { Authorization: `Bearer ${AIRTABLE_API_TOKEN}` }
         });
         if (!response.ok) throw new Error(`Airtable trả về lỗi ${response.status}.`);
 
