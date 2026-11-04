@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"tertiary-container":"#004a32","surface-tint":"#4059aa","secondary-container":"#5bb8fe","surface-container-lowest":"#ffffff","on-secondary-fixed":"#001d31","on-tertiary-fixed":"#002114","secondary-fixed-dim":"#93ccff","on-primary-fixed":"#00164e","error":"#ba1a1a","outline-variant":"#c5c5d3","surface-variant":"#dae2fd","surface-dim":"#d2d9f4","on-primary-container":"#90a8ff","on-secondary-container":"#00476e","on-tertiary-fixed-variant":"#005137","inverse-primary":"#b6c4ff","tertiary":"#003120","surface-container-highest":"#dae2fd","primary-fixed":"#dce1ff","tertiary-fixed":"#85f8c4","secondary":"#006398","on-primary":"#ffffff","on-surface-variant":"#444651","on-surface":"#131b2e","background":"#faf8ff","secondary-fixed":"#cce5ff","tertiary-fixed-dim":"#68dba9","surface-bright":"#faf8ff","surface-container-low":"#f2f3ff","outline":"#757682","on-error":"#ffffff","on-tertiary":"#ffffff","on-secondary":"#ffffff","inverse-surface":"#283044","surface-container":"#eaedff","on-error-container":"#93000a","on-background":"#131b2e","surface-container-high":"#e2e7ff","primary-container":"#1e3a8a","on-primary-fixed-variant":"#264191","inverse-on-surface":"#eef0ff","primary-fixed-dim":"#b6c4ff","on-secondary-fixed-variant":"#004b73","on-tertiary-container":"#4ac08f","surface":"#faf8ff","error-container":"#ffdad6","primary":"#00236f"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{margin:"2rem","space-lg":"1.5rem","space-md":"1rem","space-xl":"2.5rem","space-sm":"0.5rem",gutter:"1.5rem","gutter-sm":"1rem","space-xs":"0.25rem","margin-sm":"1rem"},fontFamily:{"headline-md":["Be Vietnam Pro"],"label-md":["Be Vietnam Pro"],"body-lg":["Be Vietnam Pro"],title:["Be Vietnam Pro"],"headline-sm":["Be Vietnam Pro"],"body-sm":["Be Vietnam Pro"],"display-mobile":["Be Vietnam Pro"],"headline-lg-mobile":["Be Vietnam Pro"],"label-lg":["Be Vietnam Pro"],"headline-lg":["Be Vietnam Pro"],"body-md":["Be Vietnam Pro"],"code-inline":["Space Mono"],display:["Be Vietnam Pro"]},fontSize:{"headline-md":["1.5rem",{lineHeight:"2rem",letterSpacing:"-0.015em",fontWeight:"600"}],"label-md":["0.75rem",{lineHeight:"1rem",letterSpacing:"0.02em",fontWeight:"600"}],"body-lg":["1.125rem",{lineHeight:"1.75rem",fontWeight:"400"}],title:["1.125rem",{lineHeight:"1.625rem",fontWeight:"600"}],"headline-sm":["1.25rem",{lineHeight:"1.75rem",letterSpacing:"-0.01em",fontWeight:"600"}],"body-sm":["0.875rem",{lineHeight:"1.25rem",fontWeight:"400"}],"display-mobile":["2.25rem",{lineHeight:"2.75rem",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg-mobile":["1.5rem",{lineHeight:"2rem",letterSpacing:"-0.015em",fontWeight:"700"}],"label-lg":["0.875rem",{lineHeight:"1.25rem",letterSpacing:"0.01em",fontWeight:"600"}],"headline-lg":["2rem",{lineHeight:"2.5rem",letterSpacing:"-0.02em",fontWeight:"700"}],"body-md":["1rem",{lineHeight:"1.5rem",fontWeight:"400"}],"code-inline":["0.8125rem",{lineHeight:"1.125rem",fontWeight:"400"}],display:["3rem",{lineHeight:"3.75rem",letterSpacing:"-0.025em",fontWeight:"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center gap-space-sm bg-surface-container-lowest"><img alt="FIT Portal Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WETic53S5nSMCFw9p46SekM1fwPOLezZdFyZimIBnQKtPCXb4wqlbNiLR0SPb6PEaC6CmIttvt6jFZ2BvPNJ0gO_rPZrnmocBVsJlQHW-1VzDFC4FRKvM5I_0F3I-WuX-cMjpT_F5YooleqyLdrcfgyrM6fXQNGddPa_DiAjR1WBum1ZjHlrLtDvjZRNSyrZBmrHiCpTC_mwcSu0QKrWh5wAWjdPZ4Vd3TwaIk0IHC"/><div class="flex flex-col"><span class="font-title text-title text-primary tracking-tight leading-none">FIT LMS</span><span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Khoa CNTT</span></div></div><div class="px-space-md py-space-sm"><div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between"><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface-variant uppercase">Vai trò</span><span class="font-body-sm text-body-sm text-on-surface font-semibold">Giảng viên</span></div><button class="bg-surface-container-lowest text-secondary px-space-sm py-space-xs rounded-lg font-label-md text-label-md shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:bg-surface-container-high transition-colors" type="button">Đổi</button></div></div><nav class="flex flex-col gap-space-xs px-space-sm mt-space-sm" data-active-classes="bg-primary text-on-primary font-semibold shadow-[0_1px_4px_rgba(0,35,111,0.2)]"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="tong-quan" href="tongquan.html"><span class="material-symbols-outlined text-outline group-hover:text-on-surface text-lg">dashboard</span><span class="font-body-sm text-body-sm">Tổng quan</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="mon-hoc-khoa-hoc" href="monhockhoahoc.html"><span class="material-symbols-outlined text-outline group-hover:text-on-surface text-lg">menu_book</span><span class="font-body-sm text-body-sm">Môn học &amp; Khóa học</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="bai-tap-kiem-tra" href="baitapkiemtra.html"><span class="material-symbols-outlined text-outline group-hover:text-on-surface text-lg">assignment_turned_in</span><span class="font-body-sm text-body-sm">Bài tập &amp; Kiểm tra</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="dien-dan-thao-luan" href="thaoluan.html"><span class="material-symbols-outlined text-outline group-hover:text-on-surface text-lg">forum</span><span class="font-body-sm text-body-sm">Diễn đàn Thảo luận</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-all group bg-primary text-on-primary font-semibold shadow-[0_1px_4px_rgba(0,35,111,0.2)]" data-path="quan-tri-lop-hoc" href="#"><span class="material-symbols-outlined text-outline group-hover:text-on-surface text-lg">manage_accounts</span><span class="font-body-sm text-body-sm">Quản trị &amp; Lớp học</span></a></nav></div><div class="p-space-md"><div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-md text-label-md text-on-surface-variant uppercase">Hệ thống Lab FIT</span><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span></div><p class="font-body-sm text-body-sm text-on-surface">Máy chủ bài tập: <span class="font-code-inline text-code-inline text-secondary font-bold">99.8% UP</span></p></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-xs rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.03)]"><span class="material-symbols-outlined text-primary text-base">event_note</span><span class="font-label-lg text-label-lg text-on-surface font-semibold">Học kỳ 1 • 2024-2025</span><span class="material-symbols-outlined text-outline text-base">arrow_drop_down</span></div><div class="relative hidden lg:flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-outline text-lg">search</span><input class="w-72 bg-surface-container-low rounded-lg pl-9 pr-space-md py-space-xs font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-colors" placeholder="Tìm kiếm mã lớp, sinh viên, tài liệu..." type="text"/></div></div><div class="flex items-center gap-space-md"><button class="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-xl">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="text-right hidden sm:flex flex-col"><span class="font-label-lg text-label-lg text-on-surface leading-tight font-semibold">TS. Nguyễn Văn Hùng</span><span class="font-label-md text-label-md text-on-surface-variant">Giảng viên Khoa CNTT</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC3Iz1o_VVClDah5fFY4_gxOOrWneptdYqJlmiXWLpE903qNbmpXZYVsoMg01zJ__sVHt3UEDR3MAHhSAD86x0Yk-72QVz5nyV9WX_QLNL_hEFzTgUkM_LQetpQ3DR-bZLtBGeMaM_Jb3GBVkmuzwbgqIWChp9Wqfum27dPVa-mTEhAQJES6weLkajmRp5O5BnejarHj3xt-NtzyW_YcN2mewMg-GAOFOq8QTVuffE"/></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="p-gutter flex flex-col gap-space-xl">
+<!-- Top Bar: Faculty Executive Header & Status Pill -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-code-inline text-code-inline uppercase tracking-widest text-secondary font-bold">Ban Chủ nhiệm Khoa CNTT • FIT System Operations</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Quản trị Hệ thống &amp; Quản lý Lớp học phần</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Giám sát tải điện toán thời gian thực, điều phối phân công giảng dạy và kiểm soát kỷ cương học vụ.</p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-md py-space-sm rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-secondary text-lg">sync</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">Sync: <strong class="text-on-surface font-semibold">14:02:18 (Real-time)</strong></span>
+</div>
+<button class="bg-primary text-on-primary px-space-md py-space-sm rounded-lg font-label-lg text-label-lg shadow-sm hover:bg-on-primary-fixed transition-colors flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-base">cloud_sync</span>
+<span>Đồng bộ Đào tạo</span>
+</button>
+</div>
+</div>
+<!-- Section 1: Server Health & Administrative Infrastructure (Bento Grid) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1: Active Users Footprint -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Tài khoản hoạt động</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold mt-space-xs">2,450</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">group</span>
+</div>
+</div>
+<div class="mt-space-md flex flex-col gap-space-xs">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="text-on-surface-variant">2,280 SV • 140 GV • 30 Admin</span>
+<span class="text-secondary font-bold">+6.4%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 88%;"></div>
+<div class="h-full bg-secondary" style="width: 8%;"></div>
+<div class="h-full bg-tertiary-fixed-dim" style="width: 4%;"></div>
+</div>
+</div>
+</div>
+<!-- Card 2: LMS CPU Compute Cluster -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Tải CPU Cluster (4 Nodes)</span>
+<div class="flex items-baseline gap-space-xs mt-space-xs">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">24%</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">/ 100%</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/10 flex items-center justify-center text-tertiary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">memory</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim animate-pulse"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Node 01-04 Cân bằng tải tốt</span>
+</div>
+<svg class="w-16 h-6 text-tertiary-container" fill="none" viewbox="0 0 64 24">
+<path d="M1 18L12 14L22 17L34 8L46 12L63 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Card 3: Network Bandwidth for Online Tests -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Băng thông mạng Lab</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold mt-space-xs">1.2 <span class="font-title text-title text-on-surface-variant font-normal">Gbps</span></span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">speed</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between">
+<span class="bg-surface-container-low text-secondary px-space-xs py-0.5 rounded font-label-md text-label-md font-semibold">3 ca thi trực tuyến</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">Độ trễ: 3ms</span>
+</div>
+</div>
+<!-- Card 4: SSD Cloud Storage -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Lưu trữ tài nguyên số</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold mt-space-xs">4.8 <span class="font-title text-title text-on-surface-variant font-normal">/ 10 TB</span></span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">storage</span>
+</div>
+</div>
+<div class="mt-space-md flex flex-col gap-space-xs">
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 48%;"></div>
+</div>
+<div class="flex justify-between items-center font-label-md text-label-md text-on-surface-variant">
+<span>SSD NVMe Enterprise</span>
+<span>48% đã dùng</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Command Actions & High-Priority Academic Alert Banner -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-space-md">
+<!-- Bulk Command Tools Panel (Col span 1) -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary">bolt</span>
+<h2 class="font-title text-title text-on-surface">Tác vụ Quản trị Hàng loạt</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-space-xs">
+<button class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors text-left group" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">campaign</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Gửi thông báo toàn khóa</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Lịch thi giữa kỳ &amp; quy chế thi</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors text-left group" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container group-hover:scale-110 transition-transform">lock</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Khóa sổ điểm đợt 1</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Chốt điểm quá trình 40 môn học</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
+</button>
+<button class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors text-left group" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">download</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Xuất báo cáo PDF / Excel</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Mẫu chuẩn Bộ Giáo dục &amp; Đào tạo</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
+</button>
+</div>
+<div class="p-space-sm bg-surface-container-high rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-tertiary-container text-base">verified_user</span>
+<span>Quyền hạn: <strong>BGH / Ban CN Khoa</strong></span>
+</div>
+<span class="font-code-inline text-code-inline text-on-surface-variant">Chế độ Audit ON</span>
+</div>
+</div>
+<!-- Academic Risk Warning System (Col span 2) -->
+<div class="xl:col-span-2 bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-error-container text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">warning</span>
+</div>
+
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-title text-title text-on-surface">Cảnh báo Học vụ &amp; Kỷ cương Chuyên Cần</h2>
+<span class="bg-error-container text-on-error-container px-space-xs py-0.5 rounded-full font-label-md text-label-md font-bold" id="attendanceWarningCount">Đang tải...</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sinh viên vắng từ ≥ 20% tổng số tiết theo Quy chế Đào tạo tín chỉ hiện hành.</p>
+</div>
+</div>
+<button class="bg-error text-on-error hover:bg-on-error-container px-space-md py-space-xs rounded-lg font-label-lg text-label-lg flex items-center gap-space-xs shadow-sm transition-colors" id="sendBulkAlertBtn" type="button">
+<span class="material-symbols-outlined text-base">outgoing_mail</span>
+<span>Gửi cảnh báo Email &amp; SMS hàng loạt</span>
+</button>
+</div>
+<!-- Warning Students Stream List -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm overflow-hidden" id="attendanceWarningList" aria-live="polite">
+<!-- Item 1 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-error-container/60 text-error flex items-center justify-center font-title text-title font-bold">
+                LH
+              </div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Lê Hoàng Nam</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">MSSV: 21120045 • IT001.N11</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-label-md text-label-md font-bold">Vắng: 3/10 buổi (30%)</span>
+<button class="text-error hover:text-on-error-container p-1 rounded hover:bg-surface-container" title="Gửi nhắc nhở cá nhân">
+<span class="material-symbols-outlined text-base">forward_to_inbox</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-error-container/60 text-error flex items-center justify-center font-title text-title font-bold">
+                TN
+              </div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Trần Nguyễn Hải Đăng</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">MSSV: 21120188 • CS204.CLC1</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-label-md text-label-md font-bold">Vắng: 3/12 buổi (25%)</span>
+<button class="text-error hover:text-on-error-container p-1 rounded hover:bg-surface-container" title="Gửi nhắc nhở cá nhân">
+<span class="material-symbols-outlined text-base">forward_to_inbox</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-error-container/60 text-error flex items-center justify-center font-title text-title font-bold">
+                PV
+              </div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Phạm Vũ Anh Tuấn</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">MSSV: 22120309 • IT002.N12</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-label-md text-label-md font-bold">Vắng: 2/10 buổi (20%)</span>
+<button class="text-error hover:text-on-error-container p-1 rounded hover:bg-surface-container" title="Gửi nhắc nhở cá nhân">
+<span class="material-symbols-outlined text-base">forward_to_inbox</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-error-container/60 text-error flex items-center justify-center font-title text-title font-bold">
+                VM
+              </div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Vũ Minh Quang</span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">MSSV: 21120412 • SE301.N21</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-label-md text-label-md font-bold">Vắng: 3/10 buổi (30%)</span>
+<button class="text-error hover:text-on-error-container p-1 rounded hover:bg-surface-container" title="Gửi nhắc nhở cá nhân">
+<span class="material-symbols-outlined text-base">forward_to_inbox</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant">Thông tin cảnh báo được đồng bộ song song về tài khoản Cố vấn Học tập (CVHT).</span>
+<a class="font-label-md text-label-md text-secondary hover:underline font-semibold flex items-center gap-1" href="#" id="attendanceWarningLink">
+            Xem toàn bộ danh sách
+            <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Section 3: Course Sections Master Table (Lớp học phần) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm flex flex-col overflow-hidden">
+<!-- Filter Toolbar -->
+<div class="p-space-md bg-surface-container-lowest flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-xs rounded-lg">
+<span class="material-symbols-outlined text-outline text-sm">filter_alt</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-bold">Bộ môn:</span>
+<select class="bg-transparent font-label-lg text-label-lg text-on-surface focus:outline-none cursor-pointer">
+<option value="all">Tất cả Bộ môn (4)</option>
+<option value="ktpm">Kỹ thuật Phần mềm (KTPM)</option>
+<option value="khmt">Khoa học Máy tính (KHMT)</option>
+<option value="httt">Hệ thống Thông tin (HTTT)</option>
+<option value="attt">Mạng MT &amp; ATTT</option>
+</select>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-xs rounded-lg">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-bold">Tình trạng:</span>
+<select class="bg-transparent font-label-lg text-label-lg text-on-surface focus:outline-none cursor-pointer">
+<option value="all">Tất cả tình trạng</option>
+<option value="active">Đang giảng dạy</option>
+<option value="full">Đã đủ sĩ số (100%)</option>
+<option value="pending">Chờ mở thêm nhóm</option>
+</select>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-space-sm top-2.5 text-outline text-base">search</span>
+<input class="bg-surface-container-low rounded-lg pl-8 pr-space-md py-space-xs font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none w-64" placeholder="Tìm mã lớp, tên môn học, giảng viên..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant font-semibold">Hiển thị 6 / 48 Lớp học phần</span>
+<button class="bg-surface-container-low hover:bg-surface-container text-on-surface px-space-sm py-space-xs rounded-lg font-label-md text-label-md flex items-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-sm">file_download</span>
+<span>Xuất toàn bộ DS</span>
+</button>
+</div>
+</div>
+<!-- Master Table Element -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-md text-label-md text-on-surface-variant uppercase tracking-wider h-11">
+<th class="px-space-md font-semibold">Mã Lớp HP</th>
+<th class="px-space-md font-semibold">Tên Học phần &amp; Tín chỉ</th>
+<th class="px-space-md font-semibold">Giảng viên Phụ trách</th>
+<th class="px-space-md font-semibold">Sĩ số / Tối đa</th>
+<th class="px-space-md font-semibold">Lịch học &amp; Phòng máy</th>
+<th class="px-space-md font-semibold text-center">Chuyên cần</th>
+<th class="px-space-md font-semibold text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md py-space-md font-code-inline text-code-inline font-bold text-primary">
+                IT001.N11
+              </td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Cấu trúc Dữ liệu &amp; Giải thuật</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="font-code-inline text-code-inline text-on-surface-variant">4 Tín chỉ</span>
+<span class="text-outline">•</span>
+<span class="font-label-md text-label-md text-secondary font-medium">Bộ môn KHMT</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex items-center gap-space-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Chân dung PGS. TS. Trần Đức Tuấn, giảng viên Khoa Công nghệ Thông tin, dáng vẻ chuyên nghiệp, học giả, mỉm cười nhẹ trong trang phục giảng viên đại học, ánh sáng văn phòng tự nhiên." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3mdT1zrmeRhnlvdAAEljA3VpsUlUZcquZJvq2JT3FKb6pC7o_5rZ1tLN6WcDMrsgyVqcBodJiZ3wnOB3mob0TeAw7GvFgX7Pg5aujTsjhWTweEGEdjxLkMaQ5zdpveH7KK7ySjCMjHbuwjvwzz0Dceg6AfZOW4bpW6ISnbWCYtlRRgRqh-PCvxZ4OJ3IdN9E0oV9yOezivcerA3h19u0q55W7_wjhlIISP1jde8au"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">PGS. TS. Trần Đức Tuấn</span>
+<span class="font-label-md text-label-md text-on-surface-variant">tuantd@fit.edu.vn</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="font-semibold text-on-surface">65 / 70 SV</span>
+<span class="text-on-surface-variant">93%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 93%;"></div>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Thứ 2 (Tiết 1-3)</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">computer</span>
+<span class="font-code-inline text-code-inline">Lab 402 - Tòa E</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="bg-tertiary-container/10 text-tertiary-container px-space-sm py-1 rounded font-label-md text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
+                  96.2%
+                </span>
+</td>
+<td class="px-space-md py-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="p-space-xs text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Chi tiết môn học">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-secondary hover:bg-surface-container rounded transition-colors" title="Phân công giảng dạy">
+<span class="material-symbols-outlined text-lg">person_add</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded transition-colors" title="Xuất bảng điểm">
+<span class="material-symbols-outlined text-lg">file_download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md py-space-md font-code-inline text-code-inline font-bold text-primary">
+                IT002.N12
+              </td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Lập trình Ứng dụng Web</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="font-code-inline text-code-inline text-on-surface-variant">3 Tín chỉ</span>
+<span class="text-outline">•</span>
+<span class="font-label-md text-label-md text-secondary font-medium">Bộ môn KTPM</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex items-center gap-space-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Chân dung ThS. Lê Bảo Ngọc, nữ giảng viên đại học trẻ trung, thanh lịch, mỉm cười nhẹ, nền giảng đường công nghệ thông tin sáng sủa, đồng phục giảng viên cao cấp." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0T9Hs56h45sTmN9QabagNqeMlO1XcEKfIYQoblSmOe0AkdsqbQzIkElRT1W8HTnR6POOZofK8VINjsAyTTFsSUlzzAZfKGJZPpqreTaWxihP2qF3Xl4T-O52mRMzBQsyOQZc0EEN6fNzCNPEM1TczXrafEVHWC1IUOcvmqUrSkC0UD_65TZP6ZjEguHBx-rZStQ_WYZzHFFEi5h5c2ZzvaSsu7qFELM7uoScU-pPA"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">ThS. Lê Bảo Ngọc</span>
+<span class="font-label-md text-label-md text-on-surface-variant">ngoclb@fit.edu.vn</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="font-semibold text-on-surface">88 / 90 SV</span>
+<span class="text-on-surface-variant">97%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 97%;"></div>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Thứ 4 (Tiết 6-8)</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">computer</span>
+<span class="font-code-inline text-code-inline">PM 201 - Tòa B</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="bg-tertiary-container/10 text-tertiary-container px-space-sm py-1 rounded font-label-md text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
+                  92.5%
+                </span>
+</td>
+<td class="px-space-md py-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="p-space-xs text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Chi tiết môn học">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-secondary hover:bg-surface-container rounded transition-colors" title="Phân công giảng dạy">
+<span class="material-symbols-outlined text-lg">person_add</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded transition-colors" title="Xuất bảng điểm">
+<span class="material-symbols-outlined text-lg">file_download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md py-space-md font-code-inline text-code-inline font-bold text-primary">
+                CS204.CLC1
+              </td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Kiến trúc Máy tính &amp; HĐH (CLC)</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Chất lượng cao</span>
+</div>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="font-code-inline text-code-inline text-on-surface-variant">4 Tín chỉ</span>
+<span class="text-outline">•</span>
+<span class="font-label-md text-label-md text-secondary font-medium">Bộ môn HTTT</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex items-center gap-space-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Chân dung TS. Đặng Minh Quân, nam giảng viên đầu ngành công nghệ thông tin, đeo kính tri thức, ánh mắt sắc sảo chuyên nghiệp, bối cảnh phòng nghiên cứu máy chủ." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbOoVpve-A79McFz1Va40FipwZHQyfTQZ4BBWjxl5KYueDeh7Ydf1ke3Z0K-q6fk7S2yUMPxSTbcrWZXBqIn8817isQmsIr3uEE8QyRe2LKdKsdtcpNoD1vshsZgC2k37BtylOoMufgzjoXG5ZLDnOvdw9iT8gZ6SOvUeTw9FEIjz77PC9rtjy9aQA8EdKbLetkyHsgJciEA63UXimcIvQm4HoVDuiMtEoTm7bPw3z"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">TS. Đặng Minh Quân</span>
+<span class="font-label-md text-label-md text-on-surface-variant">quandm@fit.edu.vn</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="font-semibold text-on-surface">45 / 45 SV</span>
+<span class="text-error font-bold">100% Đầy</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 100%;"></div>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Thứ 3 (Tiết 2-5)</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">computer</span>
+<span class="font-code-inline text-code-inline">Phòng CLC-01</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="bg-secondary-container/30 text-on-secondary-container px-space-sm py-1 rounded font-label-md text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  88.0%
+                </span>
+</td>
+<td class="px-space-md py-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="p-space-xs text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Chi tiết môn học">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-secondary hover:bg-surface-container rounded transition-colors" title="Phân công giảng dạy">
+<span class="material-symbols-outlined text-lg">person_add</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded transition-colors" title="Xuất bảng điểm">
+<span class="material-symbols-outlined text-lg">file_download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md py-space-md font-code-inline text-code-inline font-bold text-primary">
+                SE301.N21
+              </td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Công nghệ Phần mềm Chuyên sâu</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="font-code-inline text-code-inline text-on-surface-variant">3 Tín chỉ</span>
+<span class="text-outline">•</span>
+<span class="font-label-md text-label-md text-secondary font-medium">Bộ môn KTPM</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex items-center gap-space-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Chân dung PGS. TS. Vũ Thanh Bình, giảng viên kỳ cựu ngành kỹ thuật phần mềm, phong thái trang nghiêm, uyên bác, trang phục sơ mi chỉn chu tại trường đại học." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD3ucC4wpYMsuOz8wJPhoAVFLw55juzeehpVqg52L2dS5qnaLaLu78m0KmRo__KWuqSUab9VWBFvp8K9Mv9-h9hpw9u6h1nvtXrLYZFDYYZ2NFtw4atkk73Qgnm1gca99l-MDpeZ5UxeTfnD-NTCbmB-4PVnpjuTP5y6ruIuWHIEYNMjQNlyZzI3mxp9-cQIi7CNEnQCGXrsAvToa2Wrb_js4PuEoxhJbZ29sQNa_I"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">PGS. TS. Vũ Thanh Bình</span>
+<span class="font-label-md text-label-md text-on-surface-variant">binhvt@fit.edu.vn</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="font-semibold text-on-surface">58 / 65 SV</span>
+<span class="text-on-surface-variant">89%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 89%;"></div>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Thứ 5 (Tiết 7-9)</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">computer</span>
+<span class="font-code-inline text-code-inline">Lab 504 - Tòa E</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="bg-tertiary-container/10 text-tertiary-container px-space-sm py-1 rounded font-label-md text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
+                  94.8%
+                </span>
+</td>
+<td class="px-space-md py-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="p-space-xs text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Chi tiết môn học">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-secondary hover:bg-surface-container rounded transition-colors" title="Phân công giảng dạy">
+<span class="material-symbols-outlined text-lg">person_add</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded transition-colors" title="Xuất bảng điểm">
+<span class="material-symbols-outlined text-lg">file_download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-space-md py-space-md font-code-inline text-code-inline font-bold text-primary">
+                NET201.N15
+              </td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">An toàn &amp; Bảo mật Hệ thống Thông tin</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="font-code-inline text-code-inline text-on-surface-variant">3 Tín chỉ</span>
+<span class="text-outline">•</span>
+<span class="font-label-md text-label-md text-secondary font-medium">Bộ môn MMT &amp; ATTT</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex items-center gap-space-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Chân dung ThS. Huỳnh Công Tuấn, giảng viên chuyên ngành bảo mật thông tin và an ninh mạng, gương mặt điềm tĩnh, đeo kính, áo polo đậm màu công sở." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7PTPYyk2lkfkFL89iuNfSAj2jgt8ZSwJnqV10__3MXBbnpxJXdPpHBGVkxuva9rP3MvwtbSJM346mr_-7dolL63oxRa9SQCwxCHA_HWrGdcj5gzP9a1z2yc6K_iHlJi20Yoyt8XNVTb4EDwVgJzIFZ2b20LFZu3VlEPhvr16ULQwxZpkST6QNo-6oKBXtixxmRn-LufGqGK8D8B_zefz-3IiDNF_2ZT-Qmy3vpUGR"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">ThS. Huỳnh Công Tuấn</span>
+<span class="font-label-md text-label-md text-on-surface-variant">tuanhc@fit.edu.vn</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="font-semibold text-on-surface">50 / 50 SV</span>
+<span class="text-error font-bold">100% Đầy</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 100%;"></div>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Thứ 6 (Tiết 1-3)</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">computer</span>
+<span class="font-code-inline text-code-inline">Lab An ninh mạng B3</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="bg-tertiary-container/10 text-tertiary-container px-space-sm py-1 rounded font-label-md text-label-md font-bold inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
+                  97.1%
+                </span>
+</td>
+<td class="px-space-md py-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="p-space-xs text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Chi tiết môn học">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-secondary hover:bg-surface-container rounded transition-colors" title="Phân công giảng dạy">
+<span class="material-symbols-outlined text-lg">person_add</span>
+</button>
+<button class="p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded transition-colors" title="Xuất bảng điểm">
+<span class="material-symbols-outlined text-lg">file_download</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="px-space-md py-space-sm bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+          Hiển thị trang <strong class="text-on-surface">1</strong> trên <strong class="text-on-surface">8</strong> • Tổng số 48 lớp học phần được kích hoạt
+        </div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded text-outline hover:text-on-surface hover:bg-surface-container text-sm disabled:opacity-40" disabled="">
+            Trước
+          </button>
+<button class="w-8 h-8 rounded bg-primary text-on-primary font-label-md text-label-md font-bold">1</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface font-label-md text-label-md">2</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface font-label-md text-label-md">3</button>
+<span class="px-1 text-outline">...</span>
+<button class="w-8 h-8 rounded hover:bg-surface-container text-on-surface font-label-md text-label-md">8</button>
+<button class="px-space-sm py-1 rounded text-on-surface hover:bg-surface-container text-sm">
+            Sau
+          </button>
+</div>
+</div>
+</div>
+<!-- Section 4: Faculty Laboratory & Infrastructure Distribution Overview -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<h3 class="font-title text-title text-on-surface">Tình trạng Phân bổ Phòng máy &amp; Server Lab Thực hành</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kiểm soát trực quan tần suất sử dụng hạ tầng vật lý tại Tòa nhà E &amp; Tòa nhà B.</p>
+</div>
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-xs font-label-md text-label-md">
+<span class="w-3 h-3 rounded bg-secondary"></span>
+<span class="text-on-surface-variant" id="roomOccupiedSummary">Đang có lớp (—)</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-md text-label-md">
+<span class="w-3 h-3 rounded bg-tertiary-fixed-dim"></span>
+<span class="text-on-surface-variant" id="roomAvailableSummary">Trống (—)</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-md text-label-md">
+<span class="w-3 h-3 rounded bg-error"></span>
+<span class="text-on-surface-variant" id="roomMaintenanceSummary">Bảo trì (—)</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-space-xs" id="labRoomGrid" aria-live="polite">
+<p class="col-span-full py-space-md text-center font-body-sm text-body-sm text-on-surface-variant">Đang tải danh sách phòng máy...</p>
+</div>
+</div>
+</div>
+<!-- Micro-interaction Logic -->
+<script>
+    const AIRTABLE_ATTENDANCE_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/Chuy%C3%AAn%20c%E1%BA%A7n';
+    const AIRTABLE_ATTENDANCE_TOKEN = 'patQ7qBMlO3LlCeSp.12bc507f2f5d90b2704cbf1b547c75d7c80c57a7b2418ca91d837fd3cba12c1a';
+
+    const AIRTABLE_ROOMS_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/tbluxL7DSkEk9bZ5R';
+    const attendanceList = document.getElementById('attendanceWarningList');
+    const attendanceCount = document.getElementById('attendanceWarningCount');
+    const attendanceLink = document.getElementById('attendanceWarningLink');
+    const bulkAlertButton = document.getElementById('sendBulkAlertBtn');
+    const labRoomGrid = document.getElementById('labRoomGrid');
+
+    function getFieldText(value) {
+      if (Array.isArray(value)) return value.map(String).join(', ');
+      return value == null ? '' : String(value);
+    }
+
+    function getStudentId(fields) {
+      return getFieldText(fields.MSSV || fields['Mã số sinh viên'] || fields['Mã SV']);
+    }
+
+    function getCourseLabel(fields) {
+      return getFieldText(fields['Mã lớp học phần'] || fields['Mã lớp HP'] || fields['Mã lớp']) || 'Chưa có mã lớp';
+    }
+
+    function isAttendanceWarning(fields) {
+      const risk = getFieldText(fields['Nguy cơ cảnh báo']).trim().toLocaleLowerCase('vi');
+      if (risk) return risk === 'cảnh báo';
+
+      const absent = Number(fields['Số buổi vắng'] || 0);
+      const total = Number(fields['Tổng số buổi'] || 0);
+      return total > 0 && absent / total >= 0.2;
+    }
+
+    function createWarningCard(record) {
+      const fields = record.fields || {};
+      const studentId = getStudentId(fields) || 'Chưa có MSSV';
+      const studentName = getFieldText(fields['Họ và tên'] || fields['Tên sinh viên'] || fields['Họ tên']) || `Sinh viên ${studentId}`;
+      const absent = Number(fields['Số buổi vắng'] || 0);
+      const total = Number(fields['Tổng số buổi'] || 0);
+      const absenceRate = fields['Tỷ lệ vắng (%)'] == null
+        ? (total > 0 ? absent / total * 100 : 0)
+        : Number(fields['Tỷ lệ vắng (%)']);
+      const formattedRate = Number.isInteger(absenceRate) ? absenceRate : absenceRate.toFixed(1);
+      const initials = studentName.trim().split(/\s+/).slice(-2).map((part) => part[0]).join('').toUpperCase();
+
+      const card = document.createElement('div');
+      card.className = 'p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between gap-space-sm';
+
+      const identity = document.createElement('div');
+      identity.className = 'flex items-center gap-space-sm min-w-0';
+
+      const avatar = document.createElement('div');
+      avatar.className = 'w-9 h-9 shrink-0 rounded-full bg-error-container/60 text-error flex items-center justify-center font-title text-title font-bold';
+      avatar.textContent = initials || 'SV';
+
+      const details = document.createElement('div');
+      details.className = 'flex flex-col min-w-0';
+
+      const name = document.createElement('span');
+      name.className = 'font-label-lg text-label-lg text-on-surface font-semibold truncate';
+      name.textContent = studentName;
+
+      const metadata = document.createElement('span');
+      metadata.className = 'font-code-inline text-code-inline text-on-surface-variant truncate';
+      metadata.textContent = `MSSV: ${studentId} • ${getCourseLabel(fields)}`;
+
+      details.append(name, metadata);
+      identity.append(avatar, details);
+
+      const absence = document.createElement('span');
+      absence.className = 'shrink-0 px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-label-md text-label-md font-bold';
+      absence.textContent = `Vắng: ${absent}/${total} buổi (${formattedRate}%)`;
+
+      card.append(identity, absence);
+      return card;
+    }
+
+    async function fetchAttendanceRecords() {
+      if (!AIRTABLE_ATTENDANCE_TOKEN || AIRTABLE_ATTENDANCE_TOKEN === 'YOUR_SECRET_API_TOKEN') {
+        throw new Error('Hãy điền Airtable token trong cấu hình ở cuối trang.');
+      }
+
+      const records = [];
+      let offset = '';
+
+      do {
+        const url = new URL(AIRTABLE_ATTENDANCE_URL);
+        url.searchParams.set('pageSize', '100');
+        url.searchParams.set('view', 'Grid view');
+        if (offset) url.searchParams.set('offset', offset);
+
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${AIRTABLE_ATTENDANCE_TOKEN}` }
+        });
+        if (!response.ok) throw new Error(`Airtable trả về lỗi ${response.status}.`);
+
+        const page = await response.json();
+        records.push(...(page.records || []));
+        offset = page.offset || '';
+      } while (offset);
+
+      return records;
+    }
+
+    async function loadAttendanceWarnings() {
+      attendanceList.replaceChildren();
+      const loading = document.createElement('p');
+      loading.className = 'col-span-full py-space-md text-center font-body-sm text-body-sm text-on-surface-variant';
+      loading.textContent = 'Đang tải dữ liệu chuyên cần...';
+      attendanceList.append(loading);
+
+      try {
+        const records = await fetchAttendanceRecords();
+        const warningRecords = records.filter((record) => isAttendanceWarning(record.fields || {}));
+        const warningStudents = new Set(warningRecords.map((record) => getStudentId(record.fields || {}) || record.id));
+
+        attendanceList.replaceChildren();
+        attendanceCount.textContent = `${warningStudents.size} SV nguy cơ`;
+        attendanceLink.textContent = `Xem toàn bộ ${warningStudents.size} sinh viên`;
+        bulkAlertButton.dataset.warningCount = String(warningStudents.size);
+
+        if (!warningRecords.length) {
+          const emptyState = document.createElement('p');
+          emptyState.className = 'col-span-full py-space-md text-center font-body-sm text-body-sm text-on-surface-variant';
+          emptyState.textContent = 'Hiện không có sinh viên thuộc diện cảnh báo chuyên cần.';
+          attendanceList.append(emptyState);
+          return;
+        }
+
+        warningRecords.forEach((record) => attendanceList.append(createWarningCard(record)));
+      } catch (error) {
+        attendanceList.replaceChildren();
+        const errorMessage = document.createElement('p');
+        errorMessage.className = 'col-span-full py-space-md text-center font-body-sm text-body-sm text-error';
+        errorMessage.textContent = `Không tải được dữ liệu Airtable: ${error.message}`;
+        attendanceList.append(errorMessage);
+        attendanceCount.textContent = 'Lỗi tải dữ liệu';
+      }
+    }
+
+    loadAttendanceWarnings();
+
+    function getRoomCategory(status) {
+      const normalizedStatus = status.trim().toLocaleLowerCase('vi');
+      if (normalizedStatus.includes('đang có lớp') || normalizedStatus === 'đầy' || normalizedStatus === 'đang sử dụng') return 'occupied';
+      if (normalizedStatus === 'trống' || normalizedStatus === 'còn trống') return 'available';
+      if (normalizedStatus.includes('bảo trì')) return 'maintenance';
+      return 'other';
+    }
+
+    function formatRoomPercentage(count, total) {
+      const percentage = total ? count / total * 100 : 0;
+      return `${percentage.toLocaleString('vi-VN', { maximumFractionDigits: 1 })}%`;
+    }
+
+    function createLabRoomCard(record) {
+      const fields = record.fields || {};
+      const roomName = getFieldText(fields['Tên phòng']) || 'Phòng chưa đặt tên';
+      const roomStatus = getFieldText(fields['Tình trạng']).trim() || 'Chưa cập nhật';
+      const roomCategory = getRoomCategory(roomStatus);
+      const machineCount = Number(fields['Số máy']);
+      const styleByCategory = {
+        occupied: { dot: 'bg-secondary', text: 'text-secondary' },
+        available: { dot: 'bg-tertiary-fixed-dim', text: 'text-on-surface-variant' },
+        maintenance: { dot: 'bg-error', text: 'text-error' },
+        other: { dot: 'bg-outline', text: 'text-on-surface-variant' }
+      };
+      const style = styleByCategory[roomCategory];
+
+      const card = document.createElement('div');
+      card.className = 'p-space-sm bg-surface-container-low rounded-lg flex flex-col items-center gap-1 text-center';
+
+      const name = document.createElement('span');
+      name.className = 'font-code-inline text-code-inline text-on-surface-variant font-bold';
+      name.textContent = roomName;
+
+      const statusDot = document.createElement('span');
+      statusDot.className = `w-2.5 h-2.5 rounded-full ${style.dot}`;
+
+      const details = document.createElement('span');
+      details.className = `font-label-md text-label-md font-semibold ${style.text}`;
+      details.textContent = `${Number.isFinite(machineCount) ? `${machineCount} Máy • ` : ''}${roomStatus}`;
+
+      card.append(name, statusDot, details);
+
+      const building = getFieldText(fields['Tòa nhà']);
+      if (building) {
+        const buildingLabel = document.createElement('span');
+        buildingLabel.className = 'font-label-md text-label-md text-on-surface-variant';
+        buildingLabel.textContent = building;
+        card.append(buildingLabel);
+      }
+
+      return { card, category: roomCategory };
+    }
+
+    async function fetchLabRoomRecords() {
+      if (!AIRTABLE_ATTENDANCE_TOKEN || AIRTABLE_ATTENDANCE_TOKEN === 'YOUR_SECRET_API_TOKEN') {
+        throw new Error('Hãy điền Airtable token trong cấu hình ở cuối trang.');
+      }
+
+      const records = [];
+      let offset = '';
+
+      do {
+        const url = new URL(AIRTABLE_ROOMS_URL);
+        url.searchParams.set('pageSize', '100');
+        if (offset) url.searchParams.set('offset', offset);
+
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${AIRTABLE_ATTENDANCE_TOKEN}` }
+        });
+        if (!response.ok) throw new Error(`Airtable trả về lỗi ${response.status}.`);
+
+        const page = await response.json();
+        records.push(...(page.records || []));
+        offset = page.offset || '';
+      } while (offset);
+
+      return records;
+    }
+
+    async function loadLabRooms() {
+      try {
+        const records = await fetchLabRoomRecords();
+        const counts = { occupied: 0, available: 0, maintenance: 0, other: 0 };
+        const cards = records.map((record) => {
+          const roomCard = createLabRoomCard(record);
+          counts[roomCard.category] += 1;
+          return roomCard.card;
+        });
+
+        labRoomGrid.replaceChildren();
+        if (cards.length) {
+          labRoomGrid.append(...cards);
+        } else {
+          const emptyState = document.createElement('p');
+          emptyState.className = 'col-span-full py-space-md text-center font-body-sm text-body-sm text-on-surface-variant';
+          emptyState.textContent = 'Airtable chưa có dữ liệu phòng máy.';
+          labRoomGrid.append(emptyState);
+        }
+
+        const total = records.length;
+        document.getElementById('roomOccupiedSummary').textContent = `Đang có lớp (${formatRoomPercentage(counts.occupied, total)})`;
+        document.getElementById('roomAvailableSummary').textContent = `Trống (${formatRoomPercentage(counts.available, total)})`;
+        document.getElementById('roomMaintenanceSummary').textContent = `Bảo trì (${formatRoomPercentage(counts.maintenance, total)})`;
+      } catch (error) {
+        labRoomGrid.replaceChildren();
+        const errorMessage = document.createElement('p');
+        errorMessage.className = 'col-span-full py-space-md text-center font-body-sm text-body-sm text-error';
+        errorMessage.textContent = `Không tải được dữ liệu phòng máy: ${error.message}`;
+        labRoomGrid.append(errorMessage);
+      }
+    }
+
+    loadLabRooms();
+
+    document.getElementById('sendBulkAlertBtn')?.addEventListener('click', function() {
+      const originalText = this.innerHTML;
+      this.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">refresh</span><span>Đang điều phối gửi cảnh báo...</span>';
+      this.classList.add('opacity-80', 'pointer-events-none');
+      
+      setTimeout(() => {
+        const warningCount = this.dataset.warningCount || '0';
+        this.innerHTML = `<span class="material-symbols-outlined text-base">check_circle</span><span>Đã gửi SMS/Email tới ${warningCount} SV &amp; CVHT!</span>`;
+        this.classList.remove('bg-error', 'opacity-80');
+        this.classList.add('bg-tertiary-container', 'text-on-tertiary');
+        
+        setTimeout(() => {
+          this.innerHTML = originalText;
+          this.classList.remove('bg-tertiary-container', 'text-on-tertiary', 'pointer-events-none');
+          this.classList.add('bg-error');
+        }, 3500);
+      }, 1200);
+    });
+  </script>
+</div></main></div></body></html>
