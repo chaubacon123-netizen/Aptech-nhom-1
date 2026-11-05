@@ -535,20 +535,20 @@
 <script>
     const AIRTABLE_CONFIG = {
       baseId: 'appNVMcvG78t7EiTi',
-      tableName: 'tblUxIfxJ4lDrO4nb',
-      apiToken: 'TOKEN'
+      tableName: 'tblodHc2hWoWEbw0Y',
+      apiToken: 'patSEHnTa1gJOaBfq'
     };
 
     const AIRTABLE_STUDENT_CONFIG = {
       baseId: 'appNVMcvG78t7EiTi',
       tableName: 'tblb3s5i4hQkmWz0r',
-      apiToken: 'TOKEN'
+      apiToken: 'patSEHnTa1gJOaBfq'
     };
 
     const RUBRIC_CONFIG = {
       baseId: 'appNVMcvG78t7EiTi',
       tableName: 'Rubric chấm điểm',
-      apiToken: 'TOKENTOKEN'
+      apiToken: 'patSEHnTa1gJOaBfq'
     };
 
     const assignmentTableBody = document.getElementById('assignment-table-body');
@@ -847,10 +847,26 @@
       });
     }
 
+    function getConfiguredAirtableToken(config) {
+      const configuredToken = (config.apiToken || '').trim();
+      if (configuredToken && configuredToken !== 'YOUR_SECRET_API_TOKEN') {
+        return configuredToken;
+      }
+
+      if (typeof window !== 'undefined') {
+        const storedToken = (localStorage.getItem('airtableApiToken') || '').trim();
+        if (storedToken) {
+          return storedToken;
+        }
+      }
+
+      return '';
+    }
+
     async function fetchAirtableRecords(config) {
-      const token = (config.apiToken || '').trim();
+      const token = getConfiguredAirtableToken(config);
       if (!token) {
-        throw new Error('Chưa cấu hình Airtable PAT');
+        throw new Error('Ch?a c?u h?nh Airtable PAT');
       }
 
       const endpoint = `https://api.airtable.com/v0/${config.baseId}/${encodeURIComponent(config.tableName)}`;
@@ -862,7 +878,7 @@
       });
 
       if (!response.ok) {
-        throw new Error(`Airtable trả về lỗi ${response.status}`);
+        throw new Error(`Airtable tr? v? l?i ${response.status}`);
       }
 
       const payload = await response.json();
