@@ -16,11 +16,11 @@
 <div class="flex flex-wrap items-center gap-space-sm">
 <div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-md py-space-sm rounded-lg shadow-sm">
 <span class="material-symbols-outlined text-secondary text-lg">sync</span>
-<span class="font-code-inline text-code-inline text-on-surface-variant">Sync: <strong class="text-on-surface font-semibold">14:02:18 (Real-time)</strong></span>
+<span class="font-code-inline text-code-inline text-on-surface-variant">Đồng bộ lần cuối: <strong id="lastSyncDate" class="text-on-surface font-semibold">Chưa đồng bộ</strong></span>
 </div>
-<button class="bg-primary text-on-primary px-space-md py-space-sm rounded-lg font-label-lg text-label-lg shadow-sm hover:bg-on-primary-fixed transition-colors flex items-center gap-space-xs" type="button">
+<button id="syncAccountsBtn" class="bg-primary text-on-primary px-space-md py-space-sm rounded-lg font-label-lg text-label-lg shadow-sm hover:bg-on-primary-fixed transition-colors flex items-center gap-space-xs" type="button">
 <span class="material-symbols-outlined text-base">cloud_sync</span>
-<span>Đồng bộ Đào tạo</span>
+<span>Đồng bộ tài khoản</span>
 </button>
 </div>
 </div>
@@ -31,7 +31,7 @@
 <div class="flex items-start justify-between">
 <div class="flex flex-col">
 <span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Tài khoản hoạt động</span>
-<span class="font-headline-lg text-headline-lg text-on-surface font-bold mt-space-xs">2,450</span>
+<span id="activeAccountCount" class="font-headline-lg text-headline-lg text-on-surface font-bold mt-space-xs">Đang tải...</span>
 </div>
 <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
 <span class="material-symbols-outlined">group</span>
@@ -39,13 +39,12 @@
 </div>
 <div class="mt-space-md flex flex-col gap-space-xs">
 <div class="flex justify-between items-center font-label-md text-label-md">
-<span class="text-on-surface-variant">2,280 SV • 140 GV • 30 Admin</span>
-<span class="text-secondary font-bold">+6.4%</span>
+<span id="activeAccountBreakdown" class="text-on-surface-variant">Đang tải dữ liệu tài khoản...</span>
 </div>
 <div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden flex">
-<div class="h-full bg-primary" style="width: 88%;"></div>
-<div class="h-full bg-secondary" style="width: 8%;"></div>
-<div class="h-full bg-tertiary-fixed-dim" style="width: 4%;"></div>
+<div id="activeStudentBar" class="h-full bg-primary" style="width: 0%;"></div>
+<div id="activeLecturerBar" class="h-full bg-secondary" style="width: 0%;"></div>
+<div id="activeAdminBar" class="h-full bg-tertiary-fixed-dim" style="width: 0%;"></div>
 </div>
 </div>
 </div>
@@ -683,6 +682,7 @@
 <!-- Micro-interaction Logic -->
 <script>
     const AIRTABLE_ATTENDANCE_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/Chuy%C3%AAn%20c%E1%BA%A7n';
+    const AIRTABLE_ACCOUNTS_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/tblhYg0XQ3VCOk1KF';
     const AIRTABLE_API_TOKEN = 'YOUR_TOKEN_HERE';
 
     const AIRTABLE_ROOMS_URL = 'https://api.airtable.com/v0/appwu4HUuYEcIuFDl/tbluxL7DSkEk9bZ5R';
@@ -697,6 +697,13 @@
     const courseSyncStatus = document.getElementById('courseSyncStatus');
     const courseTableSummary = document.getElementById('courseTableSummary');
     const syncCourseTableBtn = document.getElementById('syncCourseTableBtn');
+    const lastSyncDate = document.getElementById('lastSyncDate');
+    const syncAccountsBtn = document.getElementById('syncAccountsBtn');
+    const activeAccountCount = document.getElementById('activeAccountCount');
+    const activeAccountBreakdown = document.getElementById('activeAccountBreakdown');
+    const activeStudentBar = document.getElementById('activeStudentBar');
+    const activeLecturerBar = document.getElementById('activeLecturerBar');
+    const activeAdminBar = document.getElementById('activeAdminBar');
 
     function getFieldText(value) {
       if (Array.isArray(value)) return value.map(String).join(', ');
@@ -709,6 +716,104 @@
         if (value !== undefined && value !== null && value !== '') return value;
       }
       return '';
+    }
+
+    function formatSyncDate(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = String(date.getFullYear()).slice(-2);
+      return `${day}/${month}/${year}`;
+    }
+
+    function normalizeAccountValue(value) {
+      return getFieldText(value)
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLocaleLowerCase('vi')
+        .trim();
+    }
+
+    function getAccountRole(fields) {
+      const role = normalizeAccountValue(getFirstField(fields, [
+        'Vai trò',
+        'Loại tài khoản',
+        'Loại người dùng',
+        'Position',
+        'Role',
+        'Account type',
+        'User type'
+      ]));
+      if (role.includes('sinh vien') || role.includes('student') || /\bsv\b/.test(role)) return 'student';
+      if (role.includes('giang vien') || role.includes('lecturer') || role.includes('teacher') || /\bgv\b/.test(role)) return 'lecturer';
+      if (role.includes('admin') || role.includes('quan tri')) return 'admin';
+      return '';
+    }
+
+    function isActiveAccount(fields) {
+      const status = normalizeAccountValue(getFirstField(fields, ['Trạng thái', 'Status', 'Tình trạng']));
+      return !/\b(inactive|disabled|locked|deleted|archived)\b|ngung hoat dong|khong hoat dong|vo hieu hoa|da khoa/.test(status);
+    }
+
+    async function fetchActiveAccounts() {
+      if (!AIRTABLE_API_TOKEN || AIRTABLE_API_TOKEN === 'YOUR_SECRET_API_TOKEN') {
+        throw new Error('Hãy cấu hình Airtable token ở cuối trang trước khi đồng bộ.');
+      }
+
+      const records = [];
+      let offset = '';
+      do {
+        const url = new URL(AIRTABLE_ACCOUNTS_URL);
+        url.searchParams.set('pageSize', '100');
+        if (offset) url.searchParams.set('offset', offset);
+
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${AIRTABLE_API_TOKEN}` }
+        });
+        if (!response.ok) {
+          throw new Error(`Airtable trả về lỗi ${response.status}. Kiểm tra PAT và quyền truy cập bảng tài khoản.`);
+        }
+
+        const page = await response.json();
+        records.push(...(page.records || []));
+        offset = page.offset || '';
+      } while (offset);
+      return records;
+    }
+
+    async function loadActiveAccounts() {
+      syncAccountsBtn.disabled = true;
+      activeAccountCount.textContent = 'Đang tải...';
+      activeAccountBreakdown.textContent = 'Đang tải dữ liệu tài khoản...';
+      try {
+        const records = await fetchActiveAccounts();
+        const activeRecords = records.filter((record) => isActiveAccount(record.fields || {}));
+        const counts = { student: 0, lecturer: 0, admin: 0 };
+        activeRecords.forEach((record) => {
+          const role = getAccountRole(record.fields || {});
+          if (role) counts[role] += 1;
+        });
+
+        const formatCount = (count) => new Intl.NumberFormat('vi-VN').format(count);
+        const classifiedCount = counts.student + counts.lecturer + counts.admin;
+        const total = activeRecords.length;
+        activeAccountCount.textContent = formatCount(total);
+        const unclassifiedCount = total - classifiedCount;
+        activeAccountBreakdown.textContent = classifiedCount
+          ? `${formatCount(counts.student)} SV • ${formatCount(counts.lecturer)} GV • ${formatCount(counts.admin)} Admin${unclassifiedCount ? ` • Khác: ${formatCount(unclassifiedCount)}` : ''}`
+          : `Chưa có thông tin phân loại vai trò (${formatCount(total)} tài khoản)`;
+        activeStudentBar.style.width = `${total ? counts.student / total * 100 : 0}%`;
+        activeLecturerBar.style.width = `${total ? counts.lecturer / total * 100 : 0}%`;
+        activeAdminBar.style.width = `${total ? counts.admin / total * 100 : 0}%`;
+        lastSyncDate.textContent = formatSyncDate(new Date());
+      } catch (error) {
+        activeAccountCount.textContent = 'Lỗi tải';
+        activeAccountBreakdown.textContent = `Không tải được dữ liệu tài khoản: ${error.message}`;
+        activeStudentBar.style.width = '0%';
+        activeLecturerBar.style.width = '0%';
+        activeAdminBar.style.width = '0%';
+      } finally {
+        syncAccountsBtn.disabled = false;
+      }
     }
 
     function createCourseCell(className, content) {
@@ -907,7 +1012,8 @@
         if (rows.length) courseTableBody.replaceChildren(...rows);
         else showCourseTableMessage('Airtable chưa có dữ liệu lớp học phần.');
         courseCount.textContent = `Hiển thị ${records.length} / ${records.length} Lớp học phần`;
-        const syncedAt = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+        const syncTime = new Date();
+        const syncedAt = syncTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
         courseSyncStatus.textContent = `Đồng bộ lúc ${syncedAt}`;
         courseTableSummary.textContent = `Tổng số ${records.length} lớp học phần • Đồng bộ lần cuối ${syncedAt}`;
       } catch (error) {
@@ -922,6 +1028,8 @@
 
     syncCourseTableBtn.addEventListener('click', loadCourseSections);
     loadCourseSections();
+    syncAccountsBtn.addEventListener('click', loadActiveAccounts);
+    loadActiveAccounts();
 
     function getStudentId(fields) {
       return getFieldText(fields.MSSV || fields['Mã số sinh viên'] || fields['Mã SV']);
